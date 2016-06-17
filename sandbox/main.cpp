@@ -5,7 +5,8 @@
 
 using namespace Sandbox;
 
-App app;
+#include "guicon.h"
+
 
 // the entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -13,5 +14,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	return app.winMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+
+#ifdef _DEBUG
+	RedirectIOToConsole();
+#endif
+
+	App app;
+
+	app.Initialize(hInstance, lpCmdLine, nCmdShow, 1280, 720);
+
+	return app.Run();
 }

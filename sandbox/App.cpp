@@ -23,13 +23,9 @@ using namespace std;
 //#pragma comment (lib, "d3dx11.lib")
 //#pragma comment (lib, "d3dx10.lib")
 
-void App::InitializeGraphicsSystem()
+void App::InitializeGraphics()
 {
 	Log::Info << "Initializing graphics subsystem...\n";
-
-	IDXGISwapChain *swapchain;             // the pointer to the swap chain interface
-	ID3D11Device *dev;                     // the pointer to our Direct3D device interface
-	ID3D11DeviceContext *devcon;
 
 	//// this function initializes and prepares Direct3D for use
 	//// create a struct to hold information about the swap chain
@@ -55,17 +51,25 @@ void App::InitializeGraphicsSystem()
 		NULL,
 		D3D11_SDK_VERSION,
 		&scd,
-		&swapchain,
-		&dev,
+		&m_swapchain,
+		&m_device,
 		NULL,
-		&devcon);
+		&m_deviceContext);
 
-	if (!result)
+	if (S_OK != result)
 	{
-
+		Log::Error << "Graphics initialization failed with result " << result << endl;
 	}
 }
 
+void App::ShutdownGraphics()
+{
+	// close and release all existing COM objects
+	m_swapchain->Release();
+	m_device->Release();
+	m_deviceContext->Release();
+
+}
 
 void App::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight)
 {
@@ -73,7 +77,7 @@ void App::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int
 	m_clientHeight = clientHeight;
 
 	InitializeWindows(instance, commandLine, commandShow);
-	InitializeGraphicsSystem();
+	InitializeGraphics();
 
 }
 
@@ -142,6 +146,11 @@ LRESULT CALLBACK App::winProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 }
 
 
+void App::Shutdown()
+{
+	ShutdownGraphics();
+}
+
 
 int WINAPI App::Run()
 {
@@ -167,6 +176,8 @@ int WINAPI App::Run()
 			DoFrame();
 		}
 	}
+	
+	Shutdown();
 
 	// return this part of the WM_QUIT message to Windows
 	return msg.wParam;

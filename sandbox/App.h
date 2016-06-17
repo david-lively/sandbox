@@ -50,8 +50,9 @@ namespace Sandbox
 		IDXGISwapChain* m_swapchain = nullptr;             // the pointer to the swap chain interface
 		ID3D11Device* m_device = nullptr;                     // the pointer to our Direct3D device interface
 		ID3D11DeviceContext* m_deviceContext = nullptr;
+		ID3D11RenderTargetView* m_backBuffer = nullptr;
 
-		void InitializeGraphics();
+		bool InitializeGraphics();
 		void InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow);
 
 		void Shutdown();

@@ -13,17 +13,13 @@ using namespace std;
 
 #include <d3d11.h>
 #include <dxgi.h>
-#include <dxgi1_3.h>
-//#include <d3dx11.h>
-//#include <d3dx10.h>
+//#include <dxgi1_3.h>
 
 // include the Direct3D Library file
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "dxgi.lib")
-//#pragma comment (lib, "d3dx11.lib")
-//#pragma comment (lib, "d3dx10.lib")
 
-void App::InitializeGraphics()
+bool App::InitializeGraphics()
 {
 	Log::Info << "Initializing graphics subsystem...\n";
 
@@ -59,7 +55,23 @@ void App::InitializeGraphics()
 	if (S_OK != result)
 	{
 		Log::Error << "Graphics initialization failed with result " << result << endl;
+		return false;
 	}
+
+	// set up the render target
+
+	ID3D11Texture2D* backBufferPtr;
+	m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBufferPtr);
+
+	m_device->CreateRenderTargetView(backBufferPtr, nullptr, &m_backBuffer);
+	backBufferPtr->Release();
+
+	m_deviceContext->OMSetRenderTargets(1, &m_backBuffer, nullptr);
+
+
+
+
+	return true;
 }
 
 void App::ShutdownGraphics()

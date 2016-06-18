@@ -25,12 +25,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	Window app;
 
-	app.Initialize(hInstance, lpCmdLine, nCmdShow, 1280, 720);
+	app.Initialize(hInstance, lpCmdLine, nCmdShow, true); // 1280, 720);
+	app.GetGraphics().ClearColor.Set(0.f, 0.2f, 0.4f, 1.f);
 
 	auto result = app.Run();
 
+#if 0
+
 	Log::Info << "Press enter to continue." << endl;
 	getchar();
+
+#endif
 
 	return result;
 }

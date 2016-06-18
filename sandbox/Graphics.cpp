@@ -16,6 +16,7 @@ using namespace std;
 
 Graphics::Graphics()
 {
+	ClearColor.Set(1, 0, 1, 1);
 }
 
 
@@ -23,16 +24,18 @@ Graphics::~Graphics()
 {
 	if (m_isInitialized)
 	{
-		// close and release all existing COM objects
+		m_swapchain->SetFullscreenState(false, nullptr);
 		m_swapchain->Release();
 		m_backBuffer->Release();
 		m_device->Release();
 		m_deviceContext->Release();
+
+
 	}
 
 }
 
-bool Graphics::Initialize(const HWND window, const int width, const int height)
+bool Graphics::Initialize(const HWND window, bool fullscreen, const int width, const int height)
 {
 	/// see also http://www.directxtutorial.com/Lesson.aspx?lessonid=11-4-3
 	Log::Info << "Initializing graphics subsystem" << endl;
@@ -48,9 +51,16 @@ bool Graphics::Initialize(const HWND window, const int width, const int height)
 	scd.BufferCount = 1;                                    // one back buffer
 	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      // how swap chain is to be used
+
+	scd.BufferDesc.Width = width;
+	scd.BufferDesc.Height = height;
+
 	scd.OutputWindow = window;                                // the window to be used
 	scd.SampleDesc.Count = 4;                               // how many multisamples
-	scd.Windowed = TRUE;                                    // windowed/full-screen mode
+	scd.Windowed = !fullscreen;                                    // windowed/full-screen mode
+
+	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
 
 	//// create a device, device context and swap chain using the information in the scd struct
 	HRESULT result = D3D11CreateDeviceAndSwapChain(NULL,
@@ -106,12 +116,14 @@ bool Graphics::Initialize(const HWND window, const int width, const int height)
 
 }
 
+void Graphics::Clear(const Color& clearColor)
+{
+	m_deviceContext->ClearRenderTargetView(m_backBuffer, (const float*)&clearColor);
+}
+
 void Graphics::Clear()
 {
-	Color clearColor;
-	// clear the back buffer to a deep blue
-	m_deviceContext->ClearRenderTargetView(m_backBuffer, (const float*)&clearColor);
-
+	Clear(ClearColor);
 }
 
 void Graphics::Present()

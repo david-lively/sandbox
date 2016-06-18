@@ -27,20 +27,19 @@ Window::~Window()
 }
 
 
-
-void Window::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight)
+void Window::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, bool fullscreen, int clientWidth, int clientHeight)
 {
 	m_clientWidth = clientWidth;
 	m_clientHeight = clientHeight;
 
-	m_windowHandle = InitializeWindows(instance, commandLine, commandShow);
+	m_windowHandle = InitializeWindows(instance, commandLine, commandShow, fullscreen);
 
 	m_graphics = new Graphics();
-	m_graphics->Initialize(m_windowHandle, clientWidth, clientHeight);
+	m_graphics->Initialize(m_windowHandle, fullscreen, clientWidth, clientHeight);
 }
 
 
-HWND Window::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow)
+HWND Window::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow, bool fullscreen)
 {
 	// the handle for the window, filled by a function
 	HWND hWnd;
@@ -56,7 +55,10 @@ HWND Window::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int comman
 	wc.lpfnWndProc = &Window::winProc;// WindowProc;
 	wc.hInstance = instance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+
+	if (!fullscreen)
+		wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+
 	wc.lpszClassName = "SandboxClass";
 
 	// register the window class

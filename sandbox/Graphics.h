@@ -7,19 +7,26 @@
 #include <dxgi1_3.h>
 
 #include "Log.h"
+#include "Common.h"
 
 namespace Sandbox
 {
 	class Graphics
 	{
 	public:
+		Color ClearColor;
+		
 		Graphics();
 		~Graphics();
 
-		bool Initialize(const HWND window, const int width = 1280, const int height = 720);
+		bool Initialize(const HWND window, bool fullscreen, const int width = 1280, const int height = 720);
 
 		void Clear();
+		void Clear(const Color& clearColor);
+
 		void Present();
+
+
 
 	private:
 		bool m_isInitialized = false;

@@ -18,13 +18,13 @@ namespace Sandbox
 
 		int WINAPI Run();
 
-		void Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight);
-		
-		
-		// get the last Windows API error.
-		// Returns empty string if no error is available.
-		std::string LastError();
+		void Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, bool fullscreen, int clientWidth = 1280, int clientHeight = 720);
 
+		Graphics& GetGraphics() const
+		{
+			return *m_graphics;
+		}
+		
 		void DoFrame()
 		{
 			Update();
@@ -50,7 +50,7 @@ namespace Sandbox
 		Graphics* m_graphics = nullptr;
 
 
-		HWND InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow);
+		HWND InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow, bool fullscreen);
 
 		// the WindowProc function prototype
 		static LRESULT CALLBACK winProc(HWND hWnd,

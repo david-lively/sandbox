@@ -12,6 +12,20 @@ using namespace Sandbox;
 
 using namespace std;
 
+Window::Window()
+{
+	if (nullptr != m_instance)
+		throw;
+
+	m_instance = this;
+}
+
+Window::~Window()
+{
+	if (nullptr != m_graphics)
+		delete m_graphics;
+}
+
 
 
 void Window::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight)
@@ -21,7 +35,8 @@ void Window::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, 
 
 	m_windowHandle = InitializeWindows(instance, commandLine, commandShow);
 
-	m_graphics.Initialize(m_windowHandle, clientWidth, clientHeight);
+	m_graphics = new Graphics();
+	m_graphics->Initialize(m_windowHandle, clientWidth, clientHeight);
 }
 
 
@@ -88,10 +103,6 @@ LRESULT CALLBACK Window::winProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-
-void Window::Shutdown()
-{
-}
 
 
 int WINAPI Window::Run()

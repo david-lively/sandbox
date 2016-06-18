@@ -11,6 +11,7 @@ using namespace std;
 // maximum mumber of lines the output console should have
 static const WORD MAX_CONSOLE_LINES = 500;
 #ifdef _DEBUG
+// allocate a console window and redirect stdin, stdout and stderr to it
 void RedirectIOToConsole()
 {
 	int hConHandle;
@@ -22,6 +23,7 @@ void RedirectIOToConsole()
 	// set the screen buffer to be big enough to let us scroll text
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE),
 		&coninfo);
+
 	coninfo.dwSize.Y = MAX_CONSOLE_LINES;
 	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE),
 		coninfo.dwSize);

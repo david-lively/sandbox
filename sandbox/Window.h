@@ -12,18 +12,9 @@ namespace Sandbox
 	class Window
 	{
 	public:
-		Window()
-		{
-			if (nullptr != m_instance)
-				throw;
+		Window();
 
-			m_instance = this;
-		}
-
-		~Window()
-		{
-			Shutdown();
-		}
+		~Window();
 
 		int WINAPI Run();
 
@@ -46,12 +37,8 @@ namespace Sandbox
 
 		virtual void Render()
 		{
-			m_graphics.Clear();
-
-
-
-			m_graphics.Present();
-
+			m_graphics->Clear();
+			m_graphics->Present();
 		}
 
 
@@ -60,12 +47,10 @@ namespace Sandbox
 		HWND m_windowHandle = 0;
 		int m_clientWidth  = -1;
 		int m_clientHeight = -1;
-		Graphics m_graphics;
+		Graphics* m_graphics = nullptr;
 
 
 		HWND InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow);
-
-		void Shutdown();
 
 		// the WindowProc function prototype
 		static LRESULT CALLBACK winProc(HWND hWnd,

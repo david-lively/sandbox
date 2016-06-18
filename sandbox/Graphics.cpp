@@ -1,5 +1,7 @@
 #include "Graphics.h"
 #include "Log.h"
+#include "Common.h"
+
 using namespace Sandbox;
 
 #include <d3d11.h>
@@ -74,6 +76,21 @@ bool Graphics::Initialize(const HWND window, const int width, const int height)
 
 	m_deviceContext->OMSetRenderTargets(1, &m_backBuffer, nullptr);
 
+
+	Log::Info << "Configuring viewport" << endl;
+
+	D3D11_VIEWPORT viewport;
+	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = width;
+	viewport.Height = height;
+
+	m_deviceContext->RSSetViewports(1, &viewport);
+
+
+
 	Log::Info << "Graphics initialized." << endl;
 
 	return true;
@@ -87,5 +104,21 @@ void Graphics::Shutdown()
 	m_device->Release();
 	m_deviceContext->Release();
 
+}
+
+void Graphics::Clear()
+{
+	Color clearColor;
+	// clear the back buffer to a deep blue
+	m_deviceContext->ClearRenderTargetView(m_backBuffer, (const float*)&clearColor);
+
+}
+
+void Graphics::Present()
+{
+	// do 3D rendering on the back buffer here
+
+	// switch the back buffer and the front buffer
+	m_swapchain->Present(0, 0);
 }
 

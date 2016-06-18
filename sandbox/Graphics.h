@@ -19,6 +19,9 @@ namespace Sandbox
 		bool Initialize(const HWND window, const int width = 1280, const int height = 720);
 		void Shutdown();
 
+		void Clear();
+		void Present();
+
 	private:
 		HWND m_windowHandle;
 		int m_clientWidth = -1;

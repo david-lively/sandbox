@@ -46,6 +46,12 @@ namespace Sandbox
 
 		virtual void Render()
 		{
+			m_graphics.Clear();
+
+
+
+			m_graphics.Present();
+
 		}
 
 

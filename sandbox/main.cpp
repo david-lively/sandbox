@@ -1,7 +1,11 @@
 // include the basic windows header file
 #include <windows.h>
+#include <iostream>
 
-#include "App.h"
+using namespace std;
+
+#include "Window.h"
+#include "Log.h"
 
 using namespace Sandbox;
 
@@ -19,9 +23,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	RedirectIOToConsole();
 #endif
 
-	App app;
+	Window app;
 
 	app.Initialize(hInstance, lpCmdLine, nCmdShow, 1280, 720);
 
-	return app.Run();
+	auto result = app.Run();
+
+	Log::Info << "Press enter to continue." << endl;
+	getchar();
+
+	return result;
 }

@@ -21,6 +21,15 @@ Graphics::Graphics()
 
 Graphics::~Graphics()
 {
+	if (m_isInitialized)
+	{
+		// close and release all existing COM objects
+		m_swapchain->Release();
+		m_backBuffer->Release();
+		m_device->Release();
+		m_deviceContext->Release();
+	}
+
 }
 
 bool Graphics::Initialize(const HWND window, const int width, const int height)
@@ -89,20 +98,11 @@ bool Graphics::Initialize(const HWND window, const int width, const int height)
 
 	m_deviceContext->RSSetViewports(1, &viewport);
 
-
+	m_isInitialized = true;
 
 	Log::Info << "Graphics initialized." << endl;
 
-	return true;
-
-}
-
-void Graphics::Shutdown()
-{
-	// close and release all existing COM objects
-	m_swapchain->Release();
-	m_device->Release();
-	m_deviceContext->Release();
+	return m_isInitialized;
 
 }
 

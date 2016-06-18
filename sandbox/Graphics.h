@@ -17,12 +17,12 @@ namespace Sandbox
 		~Graphics();
 
 		bool Initialize(const HWND window, const int width = 1280, const int height = 720);
-		void Shutdown();
 
 		void Clear();
 		void Present();
 
 	private:
+		bool m_isInitialized = false;
 		HWND m_windowHandle;
 		int m_clientWidth = -1;
 		int m_clientHeight = -1;

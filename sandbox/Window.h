@@ -9,10 +9,10 @@
 
 namespace Sandbox
 {
-	class App
+	class Window
 	{
 	public:
-		App()
+		Window()
 		{
 			if (nullptr != m_instance)
 				throw;
@@ -20,7 +20,7 @@ namespace Sandbox
 			m_instance = this;
 		}
 
-		~App()
+		~Window()
 		{
 			Shutdown();
 		}
@@ -56,7 +56,7 @@ namespace Sandbox
 
 
 	private:
-		App* m_instance = nullptr;
+		Window* m_instance = nullptr;
 		HWND m_windowHandle = 0;
 		int m_clientWidth  = -1;
 		int m_clientHeight = -1;

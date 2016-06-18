@@ -1,6 +1,6 @@
 // boilerplate Windows init code adapted from http://www.directxtutorial.com/
 
-#include "App.h"
+#include "Window.h"
 #include "Log.h"
 
 using namespace Sandbox;
@@ -14,7 +14,7 @@ using namespace std;
 
 
 
-void App::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight)
+void Window::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight)
 {
 	m_clientWidth = clientWidth;
 	m_clientHeight = clientHeight;
@@ -25,7 +25,7 @@ void App::Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int
 }
 
 
-HWND App::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow)
+HWND Window::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow)
 {
 	// the handle for the window, filled by a function
 	HWND hWnd;
@@ -38,7 +38,7 @@ HWND App::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandSh
 	// fill in the struct with the needed information
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = &App::winProc;// WindowProc;
+	wc.lpfnWndProc = &Window::winProc;// WindowProc;
 	wc.hInstance = instance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
@@ -71,7 +71,7 @@ HWND App::InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandSh
 }
 
 // this is the main message handler for the program
-LRESULT CALLBACK App::winProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Window::winProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	// sort through and find what code to run for the message given
 	switch (message)
@@ -89,13 +89,12 @@ LRESULT CALLBACK App::winProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 }
 
 
-void App::Shutdown()
+void Window::Shutdown()
 {
-	m_graphics.Shutdown();
 }
 
 
-int WINAPI App::Run()
+int WINAPI Window::Run()
 {
 	// this struct holds Windows event messages
 	MSG msg;

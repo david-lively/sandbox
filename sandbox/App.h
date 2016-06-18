@@ -2,11 +2,10 @@
 #define APP_H
 
 #include "Log.h"
+#include "Graphics.h"
 
 #include <windows.h>
-#include <d3d11.h>
-#include <dxgi.h>
-#include <dxgi1_3.h>
+#include <string>
 
 namespace Sandbox
 {
@@ -21,10 +20,19 @@ namespace Sandbox
 			m_instance = this;
 		}
 
+		~App()
+		{
+			Shutdown();
+		}
+
 		int WINAPI Run();
 
 		void Initialize(HINSTANCE instance, LPSTR commandLine, int commandShow, int clientWidth, int clientHeight);
-
+		
+		
+		// get the last Windows API error.
+		// Returns empty string if no error is available.
+		std::string LastError();
 
 		void DoFrame()
 		{
@@ -43,20 +51,15 @@ namespace Sandbox
 
 	private:
 		App* m_instance = nullptr;
-		HWND m_windowHandle;
-		int m_clientWidth = -1;
+		HWND m_windowHandle = 0;
+		int m_clientWidth  = -1;
 		int m_clientHeight = -1;
+		Graphics m_graphics;
 
-		IDXGISwapChain* m_swapchain = nullptr;             // the pointer to the swap chain interface
-		ID3D11Device* m_device = nullptr;                     // the pointer to our Direct3D device interface
-		ID3D11DeviceContext* m_deviceContext = nullptr;
-		ID3D11RenderTargetView* m_backBuffer = nullptr;
 
-		bool InitializeGraphics();
-		void InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow);
+		HWND InitializeWindows(HINSTANCE instance, LPSTR commandLine, int commandShow);
 
 		void Shutdown();
-		void ShutdownGraphics();
 
 		// the WindowProc function prototype
 		static LRESULT CALLBACK winProc(HWND hWnd,

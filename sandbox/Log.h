@@ -60,6 +60,7 @@ namespace Log
     extern Handler Info;
 	extern Handler Debug;
 
+	const std::string LastWinError();
 }
 
 #endif

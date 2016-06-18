@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="guicon.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
@@ -85,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="guicon.h" />
     <ClInclude Include="Log.h" />
   </ItemGroup>

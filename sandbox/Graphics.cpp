@@ -16,6 +16,7 @@ using namespace std;
 
 Graphics::Graphics()
 {
+	/// error color
 	ClearColor.Set(1, 0, 1, 1);
 }
 

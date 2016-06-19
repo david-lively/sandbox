@@ -25,7 +25,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	Window app;
 
-	app.Initialize(hInstance, lpCmdLine, nCmdShow, true); // 1280, 720);
+	app.Initialize(hInstance, lpCmdLine, nCmdShow, false, 1920, 1200); // 1280, 720);
 	app.GetGraphics().ClearColor.Set(0.f, 0.2f, 0.4f, 1.f);
 
 	auto result = app.Run();

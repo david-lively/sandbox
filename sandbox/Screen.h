@@ -8,6 +8,16 @@ namespace Sandbox
 	public:
 		Screen();
 		~Screen();
+
+		virtual void Render()
+		{
+
+		}
+
+		virtual void Update()
+		{
+
+		}
 	};
 }
 

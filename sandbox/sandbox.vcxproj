@@ -76,11 +76,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="GameSystem.cpp" />
-    <ClCompile Include="Identity.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="GameTime.cpp" />
@@ -90,11 +85,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="GameSystem.h" />
-    <ClInclude Include="Identity.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Window.h" />
